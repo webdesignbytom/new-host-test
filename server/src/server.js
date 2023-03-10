@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Set the port and URl
 const PORT = process.env.PORT;
-const HTTP_URL = process.env.HTTP_URL;
+const HTTP_URL = process.env.HTTP_URL || 'https://new-host-test-5kgva8y50-webdesignbytom.vercel.app/'
 
 // Create path to HTML
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
