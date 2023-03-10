@@ -16,17 +16,6 @@ function Notifications() {
   });
 
   useEffect(() => {
-    // fetch(
-    //   `https://new-host-test-r66i8ioqt-webdesignbytom.vercel.app/notifications`
-    // )
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setAllNotifications(data.data.notifications);
-    //     console.log('DDF data', data);
-    //   })
-    //   .catch((error) => {
-    //     console.log('error', error);
-    //   }, []);
     client
       .get(`/notifications`)
       .then((res) => {
