@@ -16,29 +16,29 @@ function Notifications() {
   });
 
   useEffect(() => {
-    fetch(
-      `https://new-host-test-r66i8ioqt-webdesignbytom.vercel.app/notifications`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setAllNotifications(data.data.notifications);
-        console.log('DDF data', data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      }, []);
-    // client
-    //   .get(`/notifications`)
-    //   .then((res) => {
-    //     setAllNotifications(res.data.data.notifications);
-    //     const seenNotes = res.data.data.notifications.filter((notification) => notification.viewed === true);
-    //     setViewedNotifications(seenNotes)
-    //     const unseenNotes = res.data.data.notifications.filter((notification) => notification.viewed === false);
-    //     setUnSeenNotifications(unseenNotes)
+    // fetch(
+    //   `https://new-host-test-r66i8ioqt-webdesignbytom.vercel.app/notifications`
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setAllNotifications(data.data.notifications);
+    //     console.log('DDF data', data);
     //   })
-    //   .catch((err) => {
-    //     console.error('Unable to get notifications', err);
-    //   });
+    //   .catch((error) => {
+    //     console.log('error', error);
+    //   }, []);
+    client
+      .get(`/notifications`)
+      .then((res) => {
+        setAllNotifications(res.data.data.notifications);
+        const seenNotes = res.data.data.notifications.filter((notification) => notification.viewed === true);
+        setViewedNotifications(seenNotes)
+        const unseenNotes = res.data.data.notifications.filter((notification) => notification.viewed === false);
+        setUnSeenNotifications(unseenNotes)
+      })
+      .catch((err) => {
+        console.error('Unable to get notifications', err);
+      });
   }, [deletedNote, createdSuccess]);
 
   const createNotification = (notification) => {
