@@ -5,8 +5,9 @@ import morgan from 'morgan';
 // Path
 import { join } from 'path';
 import * as url from 'url';
+// Import routers
 
-import notificationRouter from './routes/notifications.js'
+import notificationRouter from './routes/notifications.js';
 
 const app = express();
 app.disable('x-powered-by');
@@ -18,10 +19,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Set the port and URl
-const PORT = process.env.PORT 
-const HTTP_URL = process.env.HTTP_URL 
+const PORT = process.env.PORT;
+const HTTP_URL = process.env.HTTP_URL;
 
+// Create path to HTML
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+// Start of actions
+app.use('/notifications', notificationRouter);
 
 // Server interface page
 app.get('/', (req, res) => {
@@ -30,7 +35,17 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/notifications', notificationRouter);
+// For all unknown requests 404 page returns
+app.all('*', (req, res) => {
+  res.status(404);
+  if (req.accepts('html')) {
+    res.sendFile(join(__dirname, '..', 'views', '404.html'));
+  } else if (req.accepts('json')) {
+    res.json({ message: '404 Not Found' });
+  } else {
+    res.type('txt').send('404 Not Found');
+  }
+});
 
 // Start our API server
 app.listen(PORT, () => {
