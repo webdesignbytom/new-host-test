@@ -8,7 +8,7 @@ import {
   getViewedNotificationsByUserId
 } from '../controllers/notifications.js';
 
-
+// test
 const router = Router();
 
 router.get('/', getAllNotifications);
