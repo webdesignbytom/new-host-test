@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt
+}
+
+enum NotificationType {
+  PURCHASE
+  COMPLETION
+  MESSAGE
+  OFFER
+}
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  type      NotificationType
+  content   String
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  viewed    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime?        @updatedAt
+}
