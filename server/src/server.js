@@ -10,8 +10,8 @@ import * as url from 'url';
 import notificationRouter from './routes/notifications.js';
 
 const app = express();
+app.options('*', cors());
 app.disable('x-powered-by');
-
 // Add middleware
 app.use(cors());
 app.use(morgan('dev'));
